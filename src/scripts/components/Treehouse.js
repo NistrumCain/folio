@@ -61,10 +61,19 @@ export default class Treehouse extends React.Component {
   };
 
 
-    onMorePress() {
+    onMorePress(e) {
+      e.preventDefault();
       console.log(this.state);
       this.setState({page: this.state.page+1});
       this.axiosUpdate();
+    };
+
+    onJames() {
+      console.log('james is love');
+    };
+
+    onJamesOff() {
+      console.log('james is not love');
     };
 
   render() {
@@ -94,9 +103,11 @@ export default class Treehouse extends React.Component {
         </div>
         <a href="#" id="more" onClick={() => this.onMorePress()}>MORE</a>
         <div className="badgeWrapper">
+        <a href="#" onClick={this.onJames()} >-</a>
           {_.map(this.state.toShow, function(item, index){
             return <a key={index} className="badge" href={item.url} target="_blank"><img src={item.icon_url}/><span className="name">{item.name}</span></a>;
           })}
+          <a href="#" onClick={() => this.onMorePress(event)}>+</a>
         </div>
       </div>
     )
