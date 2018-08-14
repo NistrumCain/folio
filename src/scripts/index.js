@@ -1,6 +1,10 @@
 import {render} from 'react-dom';
 import DataActions from 'flux/actions/DataActions';
-import Home from 'components/Home';
+import Home from './routes/Home';
+import History from './routes/History';
+import Header from './components/Header';
+import '../sass/layout.scss'
+
 
 import {
   BrowserRouter as Router,
@@ -27,9 +31,11 @@ class AppInitializer {
     DataActions.getPages((response)=>{
       render(
         <Router>
-          <div>
+          <div className="site-wrapper">
+            <Header/>
             <Switch>
-              <Route path="/" component={ Home } exact />
+              <Route  path="/" component={ Home } exact />
+              <Route path="/history" component={ History } />
               <Route render={() => { return <Redirect to="/" /> }} />
             </Switch>
           </div>

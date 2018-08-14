@@ -1,6 +1,6 @@
-var webpack  			= require('webpack');
-var path				= require('path');
-var HtmlWebpackPlugin 	= require('html-webpack-plugin');
+var webpack = require('webpack');
+var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 	devtool: 'cheap-module-source-map',
@@ -38,6 +38,12 @@ module.exports = {
 				],
 				loader: ['react-hot-loader']
 			},
+			{
+					 test: /\.scss$/,
+					 loader: 'style-loader!css-loader!sass-loader'
+			 },
+			 { test: /\.(eot|svg|ttf|woff|woff2)$/,
+				 loader: 'url-loader?limit=100000' },
 			{
 				loader: "babel-loader",
 
