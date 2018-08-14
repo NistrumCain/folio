@@ -35,7 +35,6 @@ export default class Treehouse extends React.Component {
         console.log(this.state.badges);
   }
 
-
   componentDidMount() {
     this.setState({loading: false});
     axios.get(`https://teamtreehouse.com/blakeguyan.json`,
@@ -69,15 +68,35 @@ export default class Treehouse extends React.Component {
     };
 
   render() {
-    console.log(this.state);
+    const points = this.state.profile.points;
     return (
       <div className="wrapper">
-        <div className="profile"><img className="avatar" src={this.state.profile.gravatar_url} /><a href={this.state.profile.profile_url} target="_blank"><h2>{this.state.profile.name}</h2></a></div>
+        <h2 className="title">My Treehouse Profile</h2>
+        <div className="profile">
+          <div className="profile-meta">
+            <a href={this.state.profile.profile_url} target="_blank"></a>
+            <div className="title">
+              <h2>{this.state.profile.name}</h2>
+            </div>
+            <img className="avatar" src={this.state.profile.gravatar_url} />
+          </div>
+          <div className="profile-points">
+            <h3>Skill Points</h3>
+            <ul className={(this.state.loading) ? "loader" : ""}>
+              <li>Javascript: {((points) ? points.JavaScript : '')}</li>
+              <li>Design: {((points) ? points.Design : '')}</li>
+              <li>HTML: {((points) ? points.HTML : '')}</li>
+              <li>PHP: {((points) ? points.PHP : '')}</li>
+              <li className="last" >CSS: {((points) ? points.CSS : '')}</li>
+              <li style={{color: 'red'}}>Total: {((points) ? points.total : '')}</li>
+            </ul>
+          </div>
+        </div>
         <a href="#" id="more" onClick={() => this.onMorePress()}>MORE</a>
         <div className="badgeWrapper">
           {_.map(this.state.toShow, function(item, index){
             return <a key={index} className="badge" href={item.url} target="_blank"><img src={item.icon_url}/><span className="name">{item.name}</span></a>;
-          })};
+          })}
         </div>
       </div>
     )
