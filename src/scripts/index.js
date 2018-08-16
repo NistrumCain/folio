@@ -3,6 +3,7 @@ import DataActions from 'flux/actions/DataActions';
 import Home from './routes/Home';
 import History from './routes/History';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import '../sass/layout.scss'
 
 
@@ -38,6 +39,7 @@ class AppInitializer {
               <Route path="/history" component={ History } />
               <Route render={() => { return <Redirect to="/" /> }} />
             </Switch>
+            <Footer />
           </div>
         </Router>
 

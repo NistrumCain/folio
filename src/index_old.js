@@ -1,6 +1,7 @@
 import {render} from 'react-dom';
 import Home from 'routes/Home';
 import Header from 'components/Header';
+import Footer from 'components/Footer';
 import {
   BrowserRouter as Router,
   Route,
@@ -19,7 +20,9 @@ class AppInitializer {
             <Route exact path="/" component={ Home } exact />
             <Route path="/history" component={ History } exact />
           </Switch>
+          <Footer />
         </div>
+        <h2>wtf</h2>
       </Router>
 
       , document.getElementById('app')

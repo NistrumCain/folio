@@ -13,7 +13,7 @@ export default class Treehouse extends React.Component {
       this.state = {
           profile: {},
           toShow: {},
-          page: 1,
+          page: 0,
           badges: {},
           badgeArray: {},
           loading: true,
@@ -22,17 +22,15 @@ export default class Treehouse extends React.Component {
 
   axiosUpdate() {
     let badgeArray = [...this.state.badges];
-    console.log(badgeArray);
-
+    console.log(this.state.page);
     var page = this.state.page,
-        recPerPage = 16,
+        recPerPage = 13,
         //calculate the badges per page
-        startRec = Math.max(this.state.page - 1, 0) * 16,
+        startRec = Math.max(this.state.page) * 13,
         endRec = startRec + recPerPage,
         toShow = badgeArray.splice(startRec, recPerPage);
         this.setState({toShow});
-        if(endRec > this.state.badges.length) {this.setState({page: 1})}
-        console.log(this.state.badges);
+        if(endRec >= this.state.badges.length) {this.setState({page: 0})};
   }
 
   componentDidMount() {
@@ -51,9 +49,9 @@ export default class Treehouse extends React.Component {
         this.setState({badgeArray});
         console.log(badgeArray);
         var page = this.state.page,
-            recPerPage = 16,
+            recPerPage = 13,
             //calculate the badges per page
-            startRec = Math.max(this.state.page - 1, 0) * 16,
+            startRec = Math.max(this.state.page) * 13,
             endRec = startRec + recPerPage,
             toShow = badgeArray.splice(startRec, recPerPage);
             this.setState({toShow});
@@ -63,17 +61,22 @@ export default class Treehouse extends React.Component {
 
     onMorePress(e) {
       e.preventDefault();
-      console.log(this.state);
-      this.setState({page: this.state.page+1});
-      this.axiosUpdate();
+      let newNum = this.state.page + 1;
+
+        this.setState({page: newNum}, () => {
+            this.axiosUpdate();
+        });
+              console.log(this.state.page);
+
     };
 
-    onJames() {
-      console.log('james is love');
-    };
-
-    onJamesOff() {
-      console.log('james is not love');
+    onLessPress(e) {
+      e.preventDefault();
+        if(this.state.page > 0) {
+          this.setState({page: this.state.page-1},() =>{
+            this.axiosUpdate();
+          } );
+        }
     };
 
   render() {
@@ -101,13 +104,19 @@ export default class Treehouse extends React.Component {
             </ul>
           </div>
         </div>
-        <a href="#" id="more" onClick={() => this.onMorePress()}>MORE</a>
-        <div className="badgeWrapper">
-        <a href="#" onClick={this.onJames()} >-</a>
-          {_.map(this.state.toShow, function(item, index){
-            return <a key={index} className="badge" href={item.url} target="_blank"><img src={item.icon_url}/><span className="name">{item.name}</span></a>;
-          })}
-          <a href="#" onClick={() => this.onMorePress(event)}>+</a>
+        <div className="badgeContainer">
+          <div className="buttons">
+            <a href="#" onClick={() => this.onLessPress(event)}>0</a>
+          </div>
+          <div className="badgeWrapper">
+
+              {_.map(this.state.toShow, function(item, index){
+                return <a key={index} className="badge" href={item.url} target="_blank"><img src={item.icon_url}/><span className="name">{item.name}</span></a>;
+              })}
+          </div>
+          <div className="buttons" >
+            <a href="#" className="buttons" onClick={() => this.onMorePress(event)}>+</a>
+          </div>
         </div>
       </div>
     )
